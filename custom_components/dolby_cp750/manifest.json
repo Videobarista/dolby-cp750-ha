@@ -1,0 +1,12 @@
+{
+  "domain": "dolby_cp750",
+  "name": "Dolby CP750",
+  "codeowners": ["@Videobarista"],
+  "config_flow": true,
+  "documentation": "https://github.com/Videobarista/dolby-cp750-ha",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/Videobarista/dolby-cp750-ha/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}

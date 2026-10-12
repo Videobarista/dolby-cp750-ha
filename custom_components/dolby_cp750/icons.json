@@ -1,0 +1,191 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "output_relays": {
+        "default": "mdi:electric-switch",
+        "state": {
+          "on": "mdi:electric-switch-closed"
+        }
+      }
+    },
+    "button": {
+      "previous_input": {
+        "default": "mdi:swap-horizontal"
+      }
+    },
+    "media_player": {
+      "processor": {
+        "default": "mdi:surround-sound"
+      }
+    },
+    "number": {
+      "fader": {
+        "default": "mdi:knob"
+      },
+      "fader_preset_dig_1": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_dig_2": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_dig_3": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_dig_4": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_analog": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_mic": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_non_sync": {
+        "default": "mdi:tune-vertical"
+      },
+      "delay_dig_1": {
+        "default": "mdi:timer-outline"
+      },
+      "delay_dig_2": {
+        "default": "mdi:timer-outline"
+      },
+      "delay_dig_3": {
+        "default": "mdi:timer-outline"
+      },
+      "delay_dig_4": {
+        "default": "mdi:timer-outline"
+      },
+      "delay_analog": {
+        "default": "mdi:timer-outline"
+      },
+      "delay_non_sync": {
+        "default": "mdi:timer-outline"
+      },
+      "delay_mic": {
+        "default": "mdi:timer-outline"
+      },
+      "surround_delay": {
+        "default": "mdi:timer-outline"
+      }
+    },
+    "select": {
+      "input": {
+        "default": "mdi:import"
+      },
+      "power_on_input": {
+        "default": "mdi:power-plug"
+      },
+      "non_sync_format": {
+        "default": "mdi:speaker-multiple"
+      },
+      "pcm_decode_mode_dig_1": {
+        "default": "mdi:surround-sound"
+      },
+      "pcm_decode_mode_dig_2": {
+        "default": "mdi:surround-sound"
+      },
+      "pcm_decode_mode_dig_3": {
+        "default": "mdi:surround-sound"
+      },
+      "pcm_decode_mode_dig_4": {
+        "default": "mdi:surround-sound"
+      },
+      "pcm_decode_mode_analog": {
+        "default": "mdi:surround-sound"
+      },
+      "dolby_digital_decode_mode_dig_1": {
+        "default": "mdi:surround-sound"
+      },
+      "dolby_digital_decode_mode_dig_2": {
+        "default": "mdi:surround-sound"
+      },
+      "dolby_digital_decode_mode_dig_3": {
+        "default": "mdi:surround-sound"
+      },
+      "dolby_digital_decode_mode_dig_4": {
+        "default": "mdi:surround-sound"
+      }
+    },
+    "sensor": {
+      "dig_1_signal": {
+        "default": "mdi:audio-input-xlr"
+      },
+      "dig_2_signal": {
+        "default": "mdi:audio-input-xlr"
+      },
+      "dig_3_signal": {
+        "default": "mdi:audio-input-xlr"
+      },
+      "dig_4_signal": {
+        "default": "mdi:audio-input-xlr"
+      },
+      "bitstream_format": {
+        "default": "mdi:waveform"
+      },
+      "active_decode_mode": {
+        "default": "mdi:surround-sound"
+      },
+      "meter_l": {
+        "default": "mdi:volume-high"
+      },
+      "meter_c": {
+        "default": "mdi:volume-high"
+      },
+      "meter_r": {
+        "default": "mdi:volume-high"
+      },
+      "meter_lfe": {
+        "default": "mdi:volume-high"
+      },
+      "meter_ls": {
+        "default": "mdi:volume-high"
+      },
+      "meter_rs": {
+        "default": "mdi:volume-high"
+      },
+      "meter_le": {
+        "default": "mdi:volume-high"
+      },
+      "meter_re": {
+        "default": "mdi:volume-high"
+      },
+      "last_restart": {
+        "default": "mdi:restart"
+      }
+    },
+    "switch": {
+      "mute": {
+        "default": "mdi:volume-high",
+        "state": {
+          "on": "mdi:volume-off"
+        }
+      },
+      "fader_preset_dig_1_enable": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_dig_2_enable": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_dig_3_enable": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_dig_4_enable": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_analog_enable": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_mic_enable": {
+        "default": "mdi:tune-vertical"
+      },
+      "fader_preset_non_sync_enable": {
+        "default": "mdi:tune-vertical"
+      }
+    }
+  },
+  "services": {
+    "send_command": {
+      "service": "mdi:console-line"
+    }
+  }
+}

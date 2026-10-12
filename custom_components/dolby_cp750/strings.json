@@ -1,0 +1,410 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Dolby CP750",
+        "description": "Connect to the ASCII control port of a Dolby CP750 cinema processor. With SNMP the integration also shows input signal status, bitstream format, decode mode, output relays and meters.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "snmp_enabled": "Use SNMP",
+          "snmp_community": "SNMP community"
+        },
+        "data_description": {
+          "host": "IP address or host name of the CP750.",
+          "port": "TCP port of the ASCII control interface. The CP750 uses 61408.",
+          "snmp_enabled": "Read the status objects of the CP750 MIB over SNMP (UDP port 161).",
+          "snmp_community": "Read community of the SNMP agent, usually public."
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure Dolby CP750",
+        "description": "Change the address or the SNMP settings of this CP750.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "snmp_enabled": "Use SNMP",
+          "snmp_community": "SNMP community"
+        },
+        "data_description": {
+          "host": "IP address or host name of the CP750.",
+          "port": "TCP port of the ASCII control interface. The CP750 uses 61408.",
+          "snmp_enabled": "Read the status objects of the CP750 MIB over SNMP (UDP port 161).",
+          "snmp_community": "Read community of the SNMP agent, usually public."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect. Check the address and that the CP750 is switched on.",
+      "not_cp750": "Something answered on this port, but not like a CP750.",
+      "snmp_cannot_connect": "The CP750 answers on its control port, but not to SNMP. Check the community or turn SNMP off.",
+      "unknown": "Unexpected error, see the Home Assistant log."
+    },
+    "abort": {
+      "already_configured": "This CP750 is already configured.",
+      "reconfigure_successful": "The settings were updated.",
+      "wrong_device": "This address belongs to a different CP750 (another serial number)."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Dolby CP750 options",
+        "data": {
+          "scan_interval": "Polling interval"
+        },
+        "data_description": {
+          "scan_interval": "How often fader, mute and input are read, in seconds. Other settings are read once a minute."
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Connection"
+      },
+      "output_relays": {
+        "name": "Output relays"
+      }
+    },
+    "button": {
+      "previous_input": {
+        "name": "Previous input"
+      }
+    },
+    "number": {
+      "fader": {
+        "name": "Fader"
+      },
+      "fader_preset_dig_1": {
+        "name": "Fader preset Digital 1"
+      },
+      "fader_preset_dig_2": {
+        "name": "Fader preset Digital 2"
+      },
+      "fader_preset_dig_3": {
+        "name": "Fader preset Digital 3"
+      },
+      "fader_preset_dig_4": {
+        "name": "Fader preset Digital 4"
+      },
+      "fader_preset_analog": {
+        "name": "Fader preset Analog"
+      },
+      "fader_preset_mic": {
+        "name": "Fader preset Microphone"
+      },
+      "fader_preset_non_sync": {
+        "name": "Fader preset Non-sync"
+      },
+      "delay_dig_1": {
+        "name": "Delay Digital 1"
+      },
+      "delay_dig_2": {
+        "name": "Delay Digital 2"
+      },
+      "delay_dig_3": {
+        "name": "Delay Digital 3"
+      },
+      "delay_dig_4": {
+        "name": "Delay Digital 4"
+      },
+      "delay_analog": {
+        "name": "Delay Analog"
+      },
+      "delay_non_sync": {
+        "name": "Delay Non-sync"
+      },
+      "delay_mic": {
+        "name": "Delay Microphone"
+      },
+      "surround_delay": {
+        "name": "Surround delay"
+      }
+    },
+    "select": {
+      "input": {
+        "name": "Input",
+        "state": {
+          "dig_1": "Digital 1",
+          "dig_2": "Digital 2",
+          "dig_3": "Digital 3",
+          "dig_4": "Digital 4",
+          "analog": "Analog",
+          "non_sync": "Non-sync",
+          "mic": "Microphone"
+        }
+      },
+      "power_on_input": {
+        "name": "Power-on input",
+        "state": {
+          "dig_1": "Digital 1",
+          "dig_2": "Digital 2",
+          "dig_3": "Digital 3",
+          "dig_4": "Digital 4",
+          "analog": "Analog",
+          "non_sync": "Non-sync",
+          "mic": "Microphone",
+          "last": "Last used"
+        }
+      },
+      "non_sync_format": {
+        "name": "Non-sync format",
+        "state": {
+          "60": "60",
+          "61": "61",
+          "70": "70",
+          "71": "71 (Mono C)",
+          "73": "73",
+          "74": "74",
+          "75": "75"
+        }
+      },
+      "pcm_decode_mode_dig_1": {
+        "name": "PCM decode mode Digital 1",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "pcm_decode_mode_dig_2": {
+        "name": "PCM decode mode Digital 2",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "pcm_decode_mode_dig_3": {
+        "name": "PCM decode mode Digital 3",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "pcm_decode_mode_dig_4": {
+        "name": "PCM decode mode Digital 4",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "pcm_decode_mode_analog": {
+        "name": "PCM decode mode Analog",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "dolby_digital_decode_mode_dig_1": {
+        "name": "Dolby Digital decode mode Digital 1",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "dolby_digital_decode_mode_dig_2": {
+        "name": "Dolby Digital decode mode Digital 2",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "dolby_digital_decode_mode_dig_3": {
+        "name": "Dolby Digital decode mode Digital 3",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "dolby_digital_decode_mode_dig_4": {
+        "name": "Dolby Digital decode mode Digital 4",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      }
+    },
+    "sensor": {
+      "dig_1_signal": {
+        "name": "Digital 1 signal",
+        "state": {
+          "valid": "Valid",
+          "invalid": "Invalid",
+          "not_available": "Not available"
+        }
+      },
+      "dig_2_signal": {
+        "name": "Digital 2 signal",
+        "state": {
+          "valid": "Valid",
+          "invalid": "Invalid",
+          "not_available": "Not available"
+        }
+      },
+      "dig_3_signal": {
+        "name": "Digital 3 signal",
+        "state": {
+          "valid": "Valid",
+          "invalid": "Invalid",
+          "not_available": "Not available"
+        }
+      },
+      "dig_4_signal": {
+        "name": "Digital 4 signal",
+        "state": {
+          "valid": "Valid",
+          "invalid": "Invalid",
+          "not_available": "Not available"
+        }
+      },
+      "bitstream_format": {
+        "name": "Bitstream format",
+        "state": {
+          "pcm": "PCM",
+          "dolby_digital": "Dolby Digital",
+          "dolby_e": "Dolby E",
+          "not_available": "Not available"
+        }
+      },
+      "active_decode_mode": {
+        "name": "Active decode mode",
+        "state": {
+          "auto": "Auto",
+          "lr_discrete": "Discrete (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX",
+          "not_available": "Not available",
+          "invalid": "Invalid"
+        }
+      },
+      "meter_l": {
+        "name": "Meter L"
+      },
+      "meter_c": {
+        "name": "Meter C"
+      },
+      "meter_r": {
+        "name": "Meter R"
+      },
+      "meter_lfe": {
+        "name": "Meter LFE"
+      },
+      "meter_ls": {
+        "name": "Meter Ls"
+      },
+      "meter_rs": {
+        "name": "Meter Rs"
+      },
+      "meter_le": {
+        "name": "Meter Le"
+      },
+      "meter_re": {
+        "name": "Meter Re"
+      },
+      "last_restart": {
+        "name": "Last restart"
+      }
+    },
+    "switch": {
+      "mute": {
+        "name": "Mute"
+      },
+      "fader_preset_dig_1_enable": {
+        "name": "Fader preset Digital 1 enabled"
+      },
+      "fader_preset_dig_2_enable": {
+        "name": "Fader preset Digital 2 enabled"
+      },
+      "fader_preset_dig_3_enable": {
+        "name": "Fader preset Digital 3 enabled"
+      },
+      "fader_preset_dig_4_enable": {
+        "name": "Fader preset Digital 4 enabled"
+      },
+      "fader_preset_analog_enable": {
+        "name": "Fader preset Analog enabled"
+      },
+      "fader_preset_mic_enable": {
+        "name": "Fader preset Microphone enabled"
+      },
+      "fader_preset_non_sync_enable": {
+        "name": "Fader preset Non-sync enabled"
+      }
+    }
+  },
+  "exceptions": {
+    "wrong_device": {
+      "message": "A different CP750 answers at {host}. Use Reconfigure to set the right address."
+    },
+    "invalid_source": {
+      "message": "Unknown source {source}. Valid sources are: {sources}."
+    },
+    "entry_not_found": {
+      "message": "There is no Dolby CP750 entry with ID {entry_id}."
+    },
+    "entry_not_loaded": {
+      "message": "{name} is not loaded."
+    },
+    "invalid_command": {
+      "message": "A command is one line of printable ASCII text."
+    },
+    "command_failed": {
+      "message": "Sending the command to {name} failed: {error}"
+    }
+  },
+  "services": {
+    "send_command": {
+      "name": "Send command",
+      "description": "Sends one line of the CP750 ASCII protocol and returns the reply lines. Useful for testing and for settings that have no entity.",
+      "fields": {
+        "config_entry_id": {
+          "name": "CP750",
+          "description": "The CP750 to send the command to."
+        },
+        "command": {
+          "name": "Command",
+          "description": "A parameter with a value or a question mark, or a word command such as status or help."
+        }
+      }
+    }
+  }
+}

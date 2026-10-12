@@ -1,0 +1,410 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Dolby CP750",
+        "description": "Maak verbinding met de ASCII-besturingspoort van een Dolby CP750-bioscoopprocessor. Met SNMP toont de integratie ook de signaalstatus van de ingangen, het bitstreamformaat, de decodeermodus, de uitgangsrelais en de meters.",
+        "data": {
+          "host": "Host",
+          "port": "Poort",
+          "snmp_enabled": "SNMP gebruiken",
+          "snmp_community": "SNMP-community"
+        },
+        "data_description": {
+          "host": "IP-adres of hostnaam van de CP750.",
+          "port": "TCP-poort van de ASCII-besturing. De CP750 gebruikt 61408.",
+          "snmp_enabled": "Lees de statusobjecten van de CP750-MIB via SNMP (UDP-poort 161).",
+          "snmp_community": "Leescommunity van de SNMP-agent, meestal public."
+        }
+      },
+      "reconfigure": {
+        "title": "Dolby CP750 opnieuw configureren",
+        "description": "Wijzig het adres of de SNMP-instellingen van deze CP750.",
+        "data": {
+          "host": "Host",
+          "port": "Poort",
+          "snmp_enabled": "SNMP gebruiken",
+          "snmp_community": "SNMP-community"
+        },
+        "data_description": {
+          "host": "IP-adres of hostnaam van de CP750.",
+          "port": "TCP-poort van de ASCII-besturing. De CP750 gebruikt 61408.",
+          "snmp_enabled": "Lees de statusobjecten van de CP750-MIB via SNMP (UDP-poort 161).",
+          "snmp_community": "Leescommunity van de SNMP-agent, meestal public."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan geen verbinding maken. Controleer het adres en of de CP750 aan staat.",
+      "not_cp750": "Er antwoordt iets op deze poort, maar niet als een CP750.",
+      "snmp_cannot_connect": "De CP750 antwoordt op de besturingspoort, maar niet op SNMP. Controleer de community of zet SNMP uit.",
+      "unknown": "Onverwachte fout, zie het Home Assistant-logboek."
+    },
+    "abort": {
+      "already_configured": "Deze CP750 is al ingesteld.",
+      "reconfigure_successful": "De instellingen zijn bijgewerkt.",
+      "wrong_device": "Op dit adres zit een andere CP750 (ander serienummer)."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opties Dolby CP750",
+        "data": {
+          "scan_interval": "Pollinginterval"
+        },
+        "data_description": {
+          "scan_interval": "Hoe vaak fader, mute en ingang worden uitgelezen, in seconden. Overige instellingen worden eens per minuut gelezen."
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Verbinding"
+      },
+      "output_relays": {
+        "name": "Uitgangsrelais"
+      }
+    },
+    "button": {
+      "previous_input": {
+        "name": "Vorige ingang"
+      }
+    },
+    "number": {
+      "fader": {
+        "name": "Fader"
+      },
+      "fader_preset_dig_1": {
+        "name": "Faderpreset Digitaal 1"
+      },
+      "fader_preset_dig_2": {
+        "name": "Faderpreset Digitaal 2"
+      },
+      "fader_preset_dig_3": {
+        "name": "Faderpreset Digitaal 3"
+      },
+      "fader_preset_dig_4": {
+        "name": "Faderpreset Digitaal 4"
+      },
+      "fader_preset_analog": {
+        "name": "Faderpreset Analoog"
+      },
+      "fader_preset_mic": {
+        "name": "Faderpreset Microfoon"
+      },
+      "fader_preset_non_sync": {
+        "name": "Faderpreset Non-sync"
+      },
+      "delay_dig_1": {
+        "name": "Vertraging Digitaal 1"
+      },
+      "delay_dig_2": {
+        "name": "Vertraging Digitaal 2"
+      },
+      "delay_dig_3": {
+        "name": "Vertraging Digitaal 3"
+      },
+      "delay_dig_4": {
+        "name": "Vertraging Digitaal 4"
+      },
+      "delay_analog": {
+        "name": "Vertraging Analoog"
+      },
+      "delay_non_sync": {
+        "name": "Vertraging Non-sync"
+      },
+      "delay_mic": {
+        "name": "Vertraging Microfoon"
+      },
+      "surround_delay": {
+        "name": "Surroundvertraging"
+      }
+    },
+    "select": {
+      "input": {
+        "name": "Ingang",
+        "state": {
+          "dig_1": "Digitaal 1",
+          "dig_2": "Digitaal 2",
+          "dig_3": "Digitaal 3",
+          "dig_4": "Digitaal 4",
+          "analog": "Analoog",
+          "non_sync": "Non-sync",
+          "mic": "Microfoon"
+        }
+      },
+      "power_on_input": {
+        "name": "Ingang bij inschakelen",
+        "state": {
+          "dig_1": "Digitaal 1",
+          "dig_2": "Digitaal 2",
+          "dig_3": "Digitaal 3",
+          "dig_4": "Digitaal 4",
+          "analog": "Analoog",
+          "non_sync": "Non-sync",
+          "mic": "Microfoon",
+          "last": "Laatst gebruikt"
+        }
+      },
+      "non_sync_format": {
+        "name": "Non-sync-formaat",
+        "state": {
+          "60": "60",
+          "61": "61",
+          "70": "70",
+          "71": "71 (Mono C)",
+          "73": "73",
+          "74": "74",
+          "75": "75"
+        }
+      },
+      "pcm_decode_mode_dig_1": {
+        "name": "PCM-decodeermodus Digitaal 1",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "pcm_decode_mode_dig_2": {
+        "name": "PCM-decodeermodus Digitaal 2",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "pcm_decode_mode_dig_3": {
+        "name": "PCM-decodeermodus Digitaal 3",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "pcm_decode_mode_dig_4": {
+        "name": "PCM-decodeermodus Digitaal 4",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "pcm_decode_mode_analog": {
+        "name": "PCM-decodeermodus Analoog",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "dolby_digital_decode_mode_dig_1": {
+        "name": "Dolby Digital-decodeermodus Digitaal 1",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "dolby_digital_decode_mode_dig_2": {
+        "name": "Dolby Digital-decodeermodus Digitaal 2",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "dolby_digital_decode_mode_dig_3": {
+        "name": "Dolby Digital-decodeermodus Digitaal 3",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      },
+      "dolby_digital_decode_mode_dig_4": {
+        "name": "Dolby Digital-decodeermodus Digitaal 4",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX"
+        }
+      }
+    },
+    "sensor": {
+      "dig_1_signal": {
+        "name": "Signaal Digitaal 1",
+        "state": {
+          "valid": "Geldig",
+          "invalid": "Ongeldig",
+          "not_available": "Niet beschikbaar"
+        }
+      },
+      "dig_2_signal": {
+        "name": "Signaal Digitaal 2",
+        "state": {
+          "valid": "Geldig",
+          "invalid": "Ongeldig",
+          "not_available": "Niet beschikbaar"
+        }
+      },
+      "dig_3_signal": {
+        "name": "Signaal Digitaal 3",
+        "state": {
+          "valid": "Geldig",
+          "invalid": "Ongeldig",
+          "not_available": "Niet beschikbaar"
+        }
+      },
+      "dig_4_signal": {
+        "name": "Signaal Digitaal 4",
+        "state": {
+          "valid": "Geldig",
+          "invalid": "Ongeldig",
+          "not_available": "Niet beschikbaar"
+        }
+      },
+      "bitstream_format": {
+        "name": "Bitstreamformaat",
+        "state": {
+          "pcm": "PCM",
+          "dolby_digital": "Dolby Digital",
+          "dolby_e": "Dolby E",
+          "not_available": "Niet beschikbaar"
+        }
+      },
+      "active_decode_mode": {
+        "name": "Actieve decodeermodus",
+        "state": {
+          "auto": "Automatisch",
+          "lr_discrete": "Discreet (5.1)",
+          "4_discrete_sur": "Dolby Surround 7.1",
+          "prologic": "Pro Logic",
+          "prologic_2": "Pro Logic II",
+          "surround_ex": "Surround EX",
+          "not_available": "Niet beschikbaar",
+          "invalid": "Ongeldig"
+        }
+      },
+      "meter_l": {
+        "name": "Meter L"
+      },
+      "meter_c": {
+        "name": "Meter C"
+      },
+      "meter_r": {
+        "name": "Meter R"
+      },
+      "meter_lfe": {
+        "name": "Meter LFE"
+      },
+      "meter_ls": {
+        "name": "Meter Ls"
+      },
+      "meter_rs": {
+        "name": "Meter Rs"
+      },
+      "meter_le": {
+        "name": "Meter Le"
+      },
+      "meter_re": {
+        "name": "Meter Re"
+      },
+      "last_restart": {
+        "name": "Laatste herstart"
+      }
+    },
+    "switch": {
+      "mute": {
+        "name": "Mute"
+      },
+      "fader_preset_dig_1_enable": {
+        "name": "Faderpreset Digitaal 1 actief"
+      },
+      "fader_preset_dig_2_enable": {
+        "name": "Faderpreset Digitaal 2 actief"
+      },
+      "fader_preset_dig_3_enable": {
+        "name": "Faderpreset Digitaal 3 actief"
+      },
+      "fader_preset_dig_4_enable": {
+        "name": "Faderpreset Digitaal 4 actief"
+      },
+      "fader_preset_analog_enable": {
+        "name": "Faderpreset Analoog actief"
+      },
+      "fader_preset_mic_enable": {
+        "name": "Faderpreset Microfoon actief"
+      },
+      "fader_preset_non_sync_enable": {
+        "name": "Faderpreset Non-sync actief"
+      }
+    }
+  },
+  "exceptions": {
+    "wrong_device": {
+      "message": "Op {host} antwoordt een andere CP750. Stel het juiste adres in via Opnieuw configureren."
+    },
+    "invalid_source": {
+      "message": "Onbekende bron {source}. Geldige bronnen zijn: {sources}."
+    },
+    "entry_not_found": {
+      "message": "Er is geen Dolby CP750-item met ID {entry_id}."
+    },
+    "entry_not_loaded": {
+      "message": "{name} is niet geladen."
+    },
+    "invalid_command": {
+      "message": "Een commando is één regel afdrukbare ASCII-tekst."
+    },
+    "command_failed": {
+      "message": "Het commando naar {name} sturen is mislukt: {error}"
+    }
+  },
+  "services": {
+    "send_command": {
+      "name": "Commando sturen",
+      "description": "Stuurt één regel van het CP750 ASCII-protocol en geeft de antwoordregels terug. Handig om te testen en voor instellingen zonder entiteit.",
+      "fields": {
+        "config_entry_id": {
+          "name": "CP750",
+          "description": "De CP750 waar het commando naartoe gaat."
+        },
+        "command": {
+          "name": "Commando",
+          "description": "Een parameter met een waarde of een vraagteken, of een woordcommando zoals status of help."
+        }
+      }
+    }
+  }
+}

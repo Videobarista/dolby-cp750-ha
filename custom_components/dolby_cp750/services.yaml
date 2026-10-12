@@ -1,0 +1,12 @@
+send_command:
+  fields:
+    config_entry_id:
+      required: true
+      selector:
+        config_entry:
+          integration: dolby_cp750
+    command:
+      required: true
+      example: "cp750.sys.fader ?"
+      selector:
+        text:
