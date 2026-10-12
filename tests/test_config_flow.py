@@ -162,6 +162,7 @@ async def test_user_flow_already_configured(
         flow_id, {**USER_INPUT, CONF_HOST: "192.0.2.20"}
     )
 
+    await hass.async_block_till_done()
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "already_configured"
     assert mock_config_entry.data[CONF_HOST] == "192.0.2.20"
@@ -183,6 +184,7 @@ async def test_reconfigure_flow(
         result["flow_id"],
         {**USER_INPUT, CONF_HOST: "192.0.2.30", CONF_SNMP_ENABLED: False},
     )
+    await hass.async_block_till_done()
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "reconfigure_successful"
     assert mock_config_entry.data[CONF_HOST] == "192.0.2.30"
@@ -206,6 +208,7 @@ async def test_reconfigure_flow_error(
 
     fake_unit.online = True
     result = await hass.config_entries.flow.async_configure(result["flow_id"], USER_INPUT)
+    await hass.async_block_till_done()
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "reconfigure_successful"
 
@@ -244,6 +247,7 @@ async def test_reconfigure_entry_without_serial(
     result = await hass.config_entries.flow.async_configure(
         result["flow_id"], {**USER_INPUT, CONF_HOST: "192.0.2.40"}
     )
+    await hass.async_block_till_done()
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "reconfigure_successful"
     assert entry.unique_id == "192.0.2.40"

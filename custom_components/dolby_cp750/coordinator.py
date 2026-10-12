@@ -198,14 +198,16 @@ class Cp750Coordinator(DataUpdateCoordinator[Cp750Data]):
     def _async_update_device_registry(self) -> None:
         """Store a changed firmware version or serial number on the device."""
         registry = dr.async_get(self.hass)
-        device = registry.async_get_device(identifiers={(DOMAIN, self.unique_base)})
-        if device is None:
-            return
-        registry.async_update_device(
-            device.id,
-            sw_version=self.device_info.get("sw_version"),
-            serial_number=self.device_info.get("serial_number"),
-        )
+        identifier = (DOMAIN, self.unique_base)
+        # Look the device up through the entry: identifiers are only unique per
+        # config entry, and this works on every supported Home Assistant release.
+        for device in dr.async_entries_for_config_entry(registry, self.config_entry.entry_id):
+            if identifier in device.identifiers:
+                registry.async_update_device(
+                    device.id,
+                    sw_version=self.device_info.get("sw_version"),
+                    serial_number=self.device_info.get("serial_number"),
+                )
 
     # ------------------------------------------------------------------
     # Polling

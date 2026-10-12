@@ -9,7 +9,7 @@ from unittest.mock import AsyncMock, PropertyMock, patch
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.dolby_cp750 import api
+from custom_components.dolby_cp750 import api, snmp
 from custom_components.dolby_cp750.api import Cp750Client
 from custom_components.dolby_cp750.const import (
     CONF_SERIAL,
@@ -66,9 +66,36 @@ SNMP_OBJECTS: dict[str, Any] = {
 }
 
 
+@pytest.fixture
+def no_real_connections() -> Generator[None]:
+    """Make sure the clients never open a real socket.
+
+    Clients that are not wired to a fake (for example an entry that Home
+    Assistant reloads while the test shuts down) see an unreachable unit.
+    """
+
+    async def _no_tcp(host: str, port: int) -> Any:
+        raise OSError(f"No real connections in tests ({host}:{port})")
+
+    async def _no_udp(*_args: Any) -> Any:
+        raise OSError("No real SNMP in tests")
+
+    with (
+        patch.object(api, "_open_connection", _no_tcp),
+        patch.object(snmp, "_create_endpoint", _no_udp),
+    ):
+        yield
+
+
 @pytest.fixture(autouse=True)
-def auto_enable_custom_integrations(enable_custom_integrations: None) -> None:
-    """Let Home Assistant load the integration from custom_components."""
+def auto_enable_custom_integrations(
+    no_real_connections: None, enable_custom_integrations: None
+) -> None:
+    """Let Home Assistant load the integration from custom_components.
+
+    ``no_real_connections`` comes first, so it is still active while the
+    ``hass`` fixture shuts down.
+    """
 
 
 @pytest.fixture(autouse=True)

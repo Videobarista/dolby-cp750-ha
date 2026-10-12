@@ -29,6 +29,14 @@ from .fakes import SERIAL, VERSION, FakeCp750, FakeSnmpAgent
 MEDIA_PLAYER = "media_player.dolby_cp750"
 
 
+def _device(hass: HomeAssistant, entry: MockConfigEntry) -> dr.DeviceEntry | None:
+    """Return the CP750 device of the entry."""
+    for device in dr.async_entries_for_config_entry(dr.async_get(hass), entry.entry_id):
+        if (DOMAIN, SERIAL) in device.identifiers:
+            return device
+    return None
+
+
 def _own_problems(caplog: pytest.LogCaptureFixture) -> list[logging.LogRecord]:
     """Return warnings and errors logged by this integration."""
     return [
@@ -49,7 +57,7 @@ async def test_setup_and_unload(
     await setup_integration(hass, mock_config_entry)
     assert mock_config_entry.state is ConfigEntryState.LOADED
 
-    device = dr.async_get(hass).async_get_device(identifiers={(DOMAIN, SERIAL)})
+    device = _device(hass, mock_config_entry)
     assert device is not None
     assert device.manufacturer == "Dolby Laboratories"
     assert device.model == "CP750"
@@ -185,7 +193,7 @@ async def test_setup_while_unit_is_off(
     assert hass.states.get("number.dolby_cp750_fader").state == STATE_UNAVAILABLE
     assert hass.states.get("sensor.dolby_cp750_bitstream_format").state == STATE_UNAVAILABLE
     assert hass.states.get("binary_sensor.dolby_cp750_connection").state == STATE_OFF
-    device = dr.async_get(hass).async_get_device(identifiers={(DOMAIN, SERIAL)})
+    device = _device(hass, mock_config_entry)
     assert device is not None
     assert device.sw_version is None
 
@@ -195,7 +203,7 @@ async def test_setup_while_unit_is_off(
 
     assert hass.states.get(MEDIA_PLAYER).state == STATE_ON
     assert hass.states.get("number.dolby_cp750_fader").state == "7.0"
-    device = dr.async_get(hass).async_get_device(identifiers={(DOMAIN, SERIAL)})
+    device = _device(hass, mock_config_entry)
     assert device is not None
     assert device.sw_version == VERSION
 
